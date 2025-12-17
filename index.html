@@ -59,41 +59,45 @@
 
     <!-- ===== CHỐNG CHUỘT PHẢI + LONG PRESS + PHÍM TẮT ===== -->
     <script>
-      // ❌ CẤM CHUỘT PHẢI
-      document.addEventListener("contextmenu", function (e) {
-        e.preventDefault();
-        return false;
-      });
+     /* ===== PC: CẤM CHUỘT PHẢI ===== */
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
 
-      // ❌ CẤM LONG PRESS MOBILE
-      document.addEventListener(
-        "touchstart",
-        function (e) {
-          if (e.touches.length > 1) e.preventDefault();
-        },
-        { passive: false }
-      );
+  /* ===== MOBILE: CẤM LONG PRESS (KHÔNG PHÁ TAP) ===== */
+  let touchTimer = null;
 
-      document.addEventListener("touchend", function (e) {
-        e.preventDefault();
-      });
+  document.addEventListener("touchstart", function () {
+    touchTimer = setTimeout(function () {
+      // long press detected -> chặn menu
+      event.preventDefault();
+    }, 500); // giữ > 500ms mới bị chặn
+  }, { passive: false });
 
-      document.addEventListener("touchmove", function (e) {
-        e.preventDefault();
-      });
+  document.addEventListener("touchend", function () {
+    if (touchTimer) {
+      clearTimeout(touchTimer);
+      touchTimer = null;
+    }
+  });
 
-      // ❌ CHẶN PHÍM XEM SOURCE / DEVTOOLS
-      document.addEventListener("keydown", function (e) {
-        if (
-          e.key === "F12" ||
-          (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
-          (e.ctrlKey && e.key === "U") ||
-          (e.ctrlKey && e.key === "S")
-        ) {
-          e.preventDefault();
-          return false;
-        }
-      });
+  document.addEventListener("touchmove", function () {
+    if (touchTimer) {
+      clearTimeout(touchTimer);
+      touchTimer = null;
+    }
+  });
+
+  /* ===== CHẶN PHÍM DEVTOOLS (PC) ===== */
+  document.addEventListener("keydown", function (e) {
+    if (
+      e.key === "F12" ||
+      (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+      (e.ctrlKey && e.key === "U")
+    ) {
+      e.preventDefault();
+    }
+  });
     </script>
   </body>
 </html>
