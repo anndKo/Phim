@@ -59,36 +59,31 @@
 
     <!-- ===== CHỐNG CHUỘT PHẢI + LONG PRESS + PHÍM TẮT ===== -->
     <script>
-     /* ===== PC: CẤM CHUỘT PHẢI ===== */
+   // PC: cấm chuột phải
   document.addEventListener("contextmenu", function (e) {
     e.preventDefault();
   });
 
-  /* ===== MOBILE: CẤM LONG PRESS (KHÔNG PHÁ TAP) ===== */
+  // Mobile: cấm long-press
   let touchTimer = null;
 
-  document.addEventListener("touchstart", function () {
+  document.addEventListener("touchstart", function (e) {
     touchTimer = setTimeout(function () {
-      // long press detected -> chặn menu
-      event.preventDefault();
-    }, 500); // giữ > 500ms mới bị chặn
+      e.preventDefault();
+    }, 600);
   }, { passive: false });
 
   document.addEventListener("touchend", function () {
-    if (touchTimer) {
-      clearTimeout(touchTimer);
-      touchTimer = null;
-    }
+    clearTimeout(touchTimer);
+    touchTimer = null;
   });
 
   document.addEventListener("touchmove", function () {
-    if (touchTimer) {
-      clearTimeout(touchTimer);
-      touchTimer = null;
-    }
+    clearTimeout(touchTimer);
+    touchTimer = null;
   });
 
-  /* ===== CHẶN PHÍM DEVTOOLS (PC) ===== */
+  // Chặn phím devtools
   document.addEventListener("keydown", function (e) {
     if (
       e.key === "F12" ||
