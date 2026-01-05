@@ -5,7 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/hooks/useAuth';
-export function Header() {
+interface HeaderProps {
+  className?: string;
+}
+
+export function Header({ className }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -47,7 +51,7 @@ export function Header() {
     label: 'Thể loại'
   }];
   return <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass py-2' : 'bg-gradient-to-b from-background/90 via-background/50 to-transparent py-4'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass py-2' : 'bg-gradient-to-b from-background/90 via-background/50 to-transparent py-4'} ${className || ''}`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
