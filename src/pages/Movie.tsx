@@ -1,10 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
+import { useState } from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { VideoPlayer } from '@/components/VideoPlayer';
 import { useMovie, useMovies } from '@/hooks/useMovies';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAuth } from '@/hooks/useAuth';
+import { useWatchHistory } from '@/hooks/useWatchHistory';
 import { MovieRow } from '@/components/MovieRow';
 import { Star, Calendar, Clock, Users, Heart } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -16,6 +18,8 @@ export default function Movie() {
   const { movies, incrementViewCount } = useMovies();
   const { user } = useAuth();
   const { isFavorite, toggleFavorite } = useFavorites();
+  const { progressSeconds, saveProgress, clearProgress } = useWatchHistory(id);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const isMovieFavorite = id ? isFavorite(id) : false;
 
@@ -54,8 +58,8 @@ export default function Movie() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-      <main className="pt-16 sm:pt-20">
+      <Header className={`transition-all duration-300 ${isVideoPlaying ? 'opacity-0 pointer-events-none -translate-y-full' : 'opacity-100'}`} />
+      <main className={`transition-all duration-300 ${isVideoPlaying ? 'pt-0' : 'pt-16 sm:pt-20'}`}>
         <div className="container mx-auto px-2 sm:px-4 space-y-4 sm:space-y-8">
           {/* Video Player - Full width on mobile */}
           <div className="w-full -mx-2 sm:mx-0">
@@ -64,7 +68,11 @@ export default function Movie() {
                 src={movie.video_url} 
                 poster={movie.poster_url || undefined} 
                 title={movie.title} 
-                onPlay={() => incrementViewCount(movie.id)} 
+                onPlay={() => incrementViewCount(movie.id)}
+                onPlayingChange={setIsVideoPlaying}
+                savedProgress={progressSeconds}
+                onSaveProgress={saveProgress}
+                onClearProgress={clearProgress}
               />
             ) : (
               <div className="aspect-video bg-secondary rounded-none sm:rounded-lg flex items-center justify-center">
