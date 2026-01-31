@@ -1,38 +1,64 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <link rel="icon" type="image/png" href="/Phim/logo.png" />
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
+  />
 
-    <title>Annd Phim - Xem Phim Trực Tuyến</title>
-    <meta name="description" content="Xem phim giải trí đỉnh cao - Chất lượng cao" />
-    <meta name="author" content="Annd" />
+  <!-- Title -->
+  <title>Annd Phim - Xem Phim Trực Tuyến</title>
 
-    <meta property="og:title" content="Annd Phim" /> 
-    <meta property="og:description" content="Xem phim giải trí đỉnh cao - Chất lượng cao" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://anndko.github.io/Phim/" />
-    <meta property="og:image" content="https://anndko.github.io/Phim/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="ANND PHIM" />
+  <!-- Basic SEO -->
+  <meta name="description" content="Xem phim giải trí đỉnh cao - Chất lượng cao" />
+  <meta name="author" content="Annd" />
 
-    <script type="text/javascript">
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&') 
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-    <script type="module" crossorigin src="/Phim/assets/index-6S0jEUvq.js"></script>
-    <link rel="stylesheet" crossorigin href="/Phim/assets/index-n6DayixX.css">
-  </head>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="/Phim/logo.png" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/Phim/manifest.json" />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="ANND PHIM" />
+  <link rel="apple-touch-icon" href="/Phim/logo-512.png" />
+
+  <!-- Open Graph (Facebook, Zalo, Messenger…) -->
+  <meta property="og:title" content="ANND PHIM - Xem Phim Trực Tuyến" />
+  <meta property="og:description" content="Xem phim giải trí đỉnh cao - Chất lượng cao" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://anndko.github.io/Phim/" />
+  <meta property="og:image" content="https://anndko.github.io/Phim/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="ANND PHIM" />
+
+  <!-- Fix GitHub Pages routing -->
+  <script type="text/javascript">
+    (function (l) {
+      if (l.search[1] === "/") {
+        var decoded = l.search
+          .slice(1)
+          .split("&")
+          .map(function (s) {
+            return s.replace(/~and~/g, "&");
+          })
+          .join("?");
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    })(window.location);
+  </script>
+  <script type="module" crossorigin src="/Phim/assets/index-6S0jEUvq.js"></script>
+  <link rel="stylesheet" crossorigin href="/Phim/assets/index-n6DayixX.css">
+</head>
   <body>
     <div id="root"></div>
   </body>
