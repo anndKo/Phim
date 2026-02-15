@@ -174,7 +174,7 @@ export function PaymentRequiredDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto scrollbar-thin">
+      <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <CreditCard className="w-5 h-5 text-primary" />
@@ -281,13 +281,13 @@ export function PaymentRequiredDialog({
             </div>
 
             <Button
-              className="w-full bg-red-600 hover:bg-red-700 text-white border-none shadow-lg shadow-red-600/20 transition-all"
+              className="w-full"
+              variant="outline"
               onClick={handleSubmitPayment}
               disabled={!proofUrl || submitting}
             >
               {submitting ? 'Đang gửi...' : 'Gửi yêu cầu xác nhận'}
             </Button>
-
           </div>
         )}
       </DialogContent>

@@ -2,12 +2,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { useBlockCheck } from "@/hooks/useBlockCheck";
 import { AccountDeletedDialog } from "@/components/AccountDeletedDialog";
+import { GlobalAnnouncementOverlay } from "@/components/GlobalAnnouncementOverlay";
 import { supabase } from "@/integrations/supabase/client";
-
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Movie from "./pages/Movie";
@@ -24,13 +24,14 @@ function AppContent() {
   const { isBlocked, blockReason, isChecking } = useBlockCheck();
 
   const handleBlockedClose = async () => {
+    // Sign out the user and redirect to home
     await supabase.auth.signOut();
-    window.location.href = "/";
+    window.location.href = '/';
   };
 
   return (
     <>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/auth" element={<Auth />} />
@@ -41,10 +42,14 @@ function AppContent() {
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
+      
+      {/* Global announcements overlay */}
+      <GlobalAnnouncementOverlay />
 
-      <AccountDeletedDialog
-        open={isBlocked && !isChecking}
+      {/* Show blocked account dialog */}
+      <AccountDeletedDialog 
+        open={isBlocked && !isChecking} 
         reason={blockReason || undefined}
         onClose={handleBlockedClose}
       />

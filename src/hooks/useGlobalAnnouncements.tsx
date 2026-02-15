@@ -19,18 +19,18 @@ export function useGlobalAnnouncements() {
   const { toast } = useToast();
 
   const fetchAnnouncements = async () => {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('global_announcements')
       .select('*')
       .order('created_at', { ascending: false });
-    if (!error && data) setAnnouncements(data as unknown as GlobalAnnouncement[]);
+    if (!error && data) setAnnouncements(data as GlobalAnnouncement[]);
     setLoading(false);
   };
 
   useEffect(() => { fetchAnnouncements(); }, []);
 
   const createAnnouncement = async (title: string, content: string, blockSite: boolean) => {
-    const { error } = await supabase.from('global_announcements').insert({
+    const { error } = await (supabase as any).from('global_announcements').insert({
       title, content, block_site: blockSite, is_active: true,
     } as any);
     if (error) {
@@ -43,17 +43,17 @@ export function useGlobalAnnouncements() {
   };
 
   const toggleActive = async (id: string, isActive: boolean) => {
-    await supabase.from('global_announcements').update({ is_active: isActive } as any).eq('id', id);
+    await (supabase as any).from('global_announcements').update({ is_active: isActive }).eq('id', id);
     fetchAnnouncements();
   };
 
   const toggleBlockSite = async (id: string, blockSite: boolean) => {
-    await supabase.from('global_announcements').update({ block_site: blockSite } as any).eq('id', id);
+    await (supabase as any).from('global_announcements').update({ block_site: blockSite }).eq('id', id);
     fetchAnnouncements();
   };
 
   const deleteAnnouncement = async (id: string) => {
-    await supabase.from('global_announcements').delete().eq('id', id);
+    await (supabase as any).from('global_announcements').delete().eq('id', id);
     fetchAnnouncements();
   };
 
@@ -67,22 +67,22 @@ export function useActiveAnnouncements() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetch = async () => {
-      const { data } = await supabase
+    const fetchData = async () => {
+      const { data } = await (supabase as any)
         .from('global_announcements')
         .select('*')
         .eq('is_active', true)
         .order('created_at', { ascending: false });
-      if (data) setAnnouncements(data as unknown as GlobalAnnouncement[]);
+      if (data) setAnnouncements(data as GlobalAnnouncement[]);
       setLoading(false);
     };
-    fetch();
+    fetchData();
 
     // Realtime subscription
     const channel = supabase
       .channel('global_announcements_changes')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'global_announcements' }, () => {
-        fetch();
+        fetchData();
       })
       .subscribe();
 

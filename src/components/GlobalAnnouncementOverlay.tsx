@@ -6,17 +6,13 @@ import { useEffect } from 'react';
 export function GlobalAnnouncementOverlay() {
   const { blockingAnnouncement, dismissableAnnouncements, dismiss } = useActiveAnnouncements();
 
-  // Block site mode: prevent any interaction, override everything
+  // Block site mode: prevent any interaction
   useEffect(() => {
     if (blockingAnnouncement) {
       document.body.style.overflow = 'hidden';
-      // Anti-tamper: re-check periodically
       const interval = setInterval(() => {
         const overlay = document.getElementById('site-block-overlay');
-        if (!overlay) {
-          // Re-mount by forcing re-render
-          window.location.reload();
-        }
+        if (!overlay) window.location.reload();
       }, 2000);
       return () => {
         document.body.style.overflow = '';
