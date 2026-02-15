@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+
+  <title>Annd Phim - Xem Phim Trực Tuyến</title>
+
+  <meta name="description" content="Xem phim giải trí đỉnh cao - Chất lượng cao" />
+  <meta name="author" content="Annd" />
+
+  <link rel="icon" type="image/png" href="/Phim/logo.png" />
+
+  <link rel="manifest" href="/Phim/manifest.json" />
+  <meta name="theme-color" content="#000000" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="ANND PHIM" />
+  <link rel="apple-touch-icon" href="/Phim/logo-512.png" />
+
+  <meta property="og:title" content="ANND PHIM - Xem Phim Trực Tuyến" />
+  <meta property="og:description" content="Xem phim giải trí đỉnh cao - Chất lượng cao" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://anndko.github.io/Phim/" />
+  <meta property="og:image" content="https://anndko.github.io/Phim/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="ANND PHIM" />
+
+  <script>
+    (function (l) {
+      if (l.search[1] === "/") {
+        var decoded = l.search
+          .slice(1)
+          .split("&")
+          .map(function (s) {
+            return s.replace(/~and~/g, "&");
+          })
+          .join("?");
+        window.history.replaceState(
+          null,
+          null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+        );
+      }
+    })(window.location);
+  </script>
+</head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
